@@ -5,10 +5,10 @@ from HotelesCore.models import *
 class HotelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hotel
-        fields = ('id_graphic_designer', 'datetime')
+        fields = ('id_hotel', 'name')
 
 class RoomTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = RoomType
-        fields = ('id_character', 'id_graphic_designer', 'name', 'datetime','url_image')
+        fields = ('id_room_type', 'name', 'description')
 

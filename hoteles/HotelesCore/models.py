@@ -8,7 +8,7 @@ class Hotel(models.Model):
     id_hotel = models.AutoField(primary_key=True)
     name = models.CharField(max_length= 255)
     crated_at = models.DateTimeField(default= datetime.now,verbose_name="Fecha de creacion")
-    updated_at = models.DateTimeField(default= datetime.now,verbose_name="Fecha de creacion")
+    updated_at = models.DateTimeField(default= datetime.now,verbose_name="Fecha de actualizacion")
     addres = models.CharField(max_length=500,unique=True,verbose_name=pgettext_lazy('Hotel','direccion'))
 
     def __str__(self):
@@ -67,8 +67,6 @@ class Booking(models.Model):
         ordering = ['id_booking']
         verbose_name = pgettext_lazy('Booking', 'Booking')
         verbose_name_plural = pgettext_lazy('Booking', 'Bookings')
-
-
 
     def __str__(self):
         return '{USER} - {ROOM}'.format(USER=self.user.name, ROOM=self.room.name)
