@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from datetime import datetime
 # Create your models here.
 class Hotel(models.Model):
+    id_hotel = models.AutoField(primary_key=True)
     name = models.CharField(max_length= 255)
     crated_at = models.DateTimeField(default= datetime.now,verbose_name="Fecha de creacion")
     updated_at = models.DateTimeField(default= datetime.now,verbose_name="Fecha de creacion")
@@ -15,18 +16,19 @@ class Hotel(models.Model):
     class Meta:
         # Define the database table
         db_table = 'hotel'
-        ordering = ['id']
+        ordering = ['id_hotel']
         verbose_name = pgettext_lazy('Hotel', 'Hotel')
         verbose_name_plural = pgettext_lazy('Hotel', 'Hotels')
 
 class RoomType(models.Model):
+    id_room_type = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255,unique=True,verbose_name=pgettext_lazy('RoomType','name'))
     description = models.TextField(blank=True,verbose_name=pgettext_lazy('RoomType','description'))
 
     class Meta:
         # Define the database table
         db_table = 'hotels_roomtypes'
-        ordering = ['id']
+        ordering = ['id_room_type']
         verbose_name = pgettext_lazy('RoomType', 'Room type')
         verbose_name_plural = pgettext_lazy('RoomType', 'Room types')
 
@@ -34,10 +36,11 @@ class RoomType(models.Model):
         return self.name
 
 class Room(models.Model):
-    hotel = models.ForeignKey('Hotel',on_delete=models.PROTECT,verbose_name=pgettext_lazy('Room','hotel'))
+    id_room = models.AutoField(primary_key=True)
+    hotel = models.ForeignKey('Hotel',on_delete=models.PROTECT,verbose_name=pgettext_lazy('Room','id_hotel'))
     name = models.CharField(max_length=255,verbose_name=pgettext_lazy('Room','name'))
     description = models.TextField(blank=True,verbose_name=pgettext_lazy('Room','description'))
-    room_type = models.ForeignKey('RoomType',on_delete=models.PROTECT,verbose_name=pgettext_lazy('Room','room type'))
+    room_type = models.ForeignKey('RoomType',on_delete=models.PROTECT,verbose_name=pgettext_lazy('Room','id_room_type'))
     phone1 = models.CharField(max_length=255,blank=True,verbose_name=pgettext_lazy('Room','phone 1'))
     seats_base = models.PositiveIntegerField(default=1,verbose_name=pgettext_lazy('Room','seats base'))
     seats_additional = models.PositiveIntegerField(default=0,verbose_name=pgettext_lazy('Room','seats additional'))
@@ -46,7 +49,7 @@ class Room(models.Model):
     class Meta:
         # Define the database table
         db_table = 'hotels_rooms'
-        ordering = ['hotel', 'id']
+        ordering = ['id_room']
         verbose_name = pgettext_lazy('Room', 'Room')
         verbose_name_plural = pgettext_lazy('Room', 'Rooms')
 
@@ -54,13 +57,14 @@ class Room(models.Model):
         return '{HOTEL} - {NAME}'.format(HOTEL=self.hotel.name, NAME=self.name)
 
 class Booking(models.Model):
-    hotel = models.ForeignKey('Hotel', on_delete=models.PROTECT, verbose_name=pgettext_lazy('Booking', 'hotel'))
+    id_booking = models.AutoField(primary_key=True)
+    hotel = models.ForeignKey('Hotel', on_delete=models.PROTECT, verbose_name=pgettext_lazy('Booking', 'id_hotel'))
     room = models.ForeignKey('Room', on_delete=models.PROTECT, verbose_name=pgettext_lazy('Booking', 'room'))
     user = models.IntegerField(default=0,verbose_name='user')
     class Meta:
         # Define the database table
         db_table = 'hotels_rooms_booking'
-        ordering = ['room', 'id']
+        ordering = ['id_booking']
         verbose_name = pgettext_lazy('Booking', 'Booking')
         verbose_name_plural = pgettext_lazy('Booking', 'Bookings')
 
