@@ -6,7 +6,7 @@ from datetime import datetime
 # Create your models here.
 class Hotel(models.Model):
     name = models.CharField(max_length= 255)
-    crated_at = models.DateTimeField(default= datetime.now(),verbose_name="Fecha de creacion")
+    crated_at = models.DateTimeField(default= datetime.now,verbose_name="Fecha de creacion")
     updated_at = models.DateTimeField(default= datetime.now,verbose_name="Fecha de creacion")
     addres = models.CharField(max_length=500,unique=True,verbose_name=pgettext_lazy('Hotel','direccion'))
 
