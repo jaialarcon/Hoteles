@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path, include
 from django.views.generic import TemplateView
-
+from django.conf.urls import url, include
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('HotelesCore.urls')),
+    #path('api/', include('HotelesCore.urls')),
     path('api/authentication/', include('dj_rest_auth.urls')),
+    url(r'^api/', include('HotelesCore.urls')),
     path('api/registration/',include('dj_rest_auth.registration.urls')),
 ]

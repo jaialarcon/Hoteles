@@ -7,9 +7,9 @@ from datetime import datetime
 class Hotel(models.Model):
     id_hotel = models.AutoField(primary_key=True)
     name = models.CharField(max_length= 255)
-    crated_at = models.DateTimeField(default= datetime.now,verbose_name="Fecha de creacion")
-    updated_at = models.DateTimeField(default= datetime.now,verbose_name="Fecha de actualizacion")
-    addres = models.CharField(max_length=500,unique=True,verbose_name=pgettext_lazy('Hotel','direccion'))
+    crated_at = models.DateTimeField(default=datetime.now())
+    updated_at = models.DateTimeField(default=datetime.now())
+    address = models.CharField(max_length=500,unique=True,verbose_name=pgettext_lazy('Hotel','direccion'))
 
     def __str__(self):
         return self.name
@@ -24,6 +24,8 @@ class RoomType(models.Model):
     id_room_type = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255,unique=True,verbose_name=pgettext_lazy('RoomType','name'))
     description = models.TextField(blank=True,verbose_name=pgettext_lazy('RoomType','description'))
+    crated_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         # Define the database table
@@ -45,6 +47,8 @@ class Room(models.Model):
     seats_base = models.PositiveIntegerField(default=1,verbose_name=pgettext_lazy('Room','seats base'))
     seats_additional = models.PositiveIntegerField(default=0,verbose_name=pgettext_lazy('Room','seats additional'))
     booked = models.BooleanField(default=False,verbose_name=pgettext_lazy('Room','booked Room'))
+    crated_at = models.DateTimeField(default=datetime.now())
+    updated_at = models.DateTimeField(default=datetime.now())
 
     class Meta:
         # Define the database table
@@ -61,6 +65,11 @@ class Booking(models.Model):
     hotel = models.ForeignKey('Hotel', on_delete=models.PROTECT, verbose_name=pgettext_lazy('Booking', 'id_hotel'))
     room = models.ForeignKey('Room', on_delete=models.PROTECT, verbose_name=pgettext_lazy('Booking', 'room'))
     user = models.IntegerField(default=0,verbose_name='user')
+    crated_at = models.DateTimeField(default=datetime.now())
+    updated_at = models.DateTimeField(default=datetime.now())
+    begin_at = models.DateTimeField(default=datetime.now())
+    ends_at = models.DateTimeField()
+    ends = models.BooleanField(default=False,verbose_name=pgettext_lazy('Room','ends Booking'))
     class Meta:
         # Define the database table
         db_table = 'hotels_rooms_booking'

@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os.path
 from pathlib import Path
 
-
+ALLOWED_HOSTS=['*']
+CORS_ORIGIN_ALLOW_ALL = True
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,21 +26,18 @@ SECRET_KEY = 'django-insecure-@moty-pi+v@-!=*8v$&%r_nz+r!m2zp$)o46+e=pv^h+9f4zf)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
     'rest_framework',
+    'corsheaders',
     'rest_framework.authtoken',
     'dj_rest_auth',
     'django.contrib.admin',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    # 'allauth.socialaccount' # si queremos implementar autenticación usando redes sociales
+    'allauth.socialaccount',# si queremos implementar autenticación usando redes sociales
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -57,6 +55,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -107,7 +106,7 @@ REST_FRAMEWORK = {
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
     ],
 }
-REST_USE_JWT = True
+REST_USE_JWT = False
 JWT_AUTH_COOKIE = 'jwt-auth-token'
 JWT_AUTH_REFRESH_COOKIE = 'jwt-refresh-token'
 
@@ -143,9 +142,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-SITE_ID = 1
+#SITE_ID = 1
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
